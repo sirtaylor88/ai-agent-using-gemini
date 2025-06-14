@@ -1,0 +1,43 @@
+[project]
+name = "ai-agent"
+description = ""
+authors = [
+    {name = "Nhat Tai NGUYEN",email = "nhattai.nguyen88@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12, <4.0"
+dependencies = [
+    "google-genai (>=1.19.0,<2.0.0)",
+    "poetry-dynamic-versioning (>=1.8.2,<2.0.0)",
+    "poetry-plugin-sort (>=0.3.0,<0.4.0)",
+    "python-dotenv (>=1.1.0,<2.0.0)"
+]
+dynamic = ["version"]
+
+[tool.poetry]
+version = "0.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^4.2.0"
+pylint = "^3.3.7"
+ruff = "^0.11.13"
+
+[tool.poetry-dynamic-versioning]
+enable = true
+
+[build-system]
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
+build-backend = "poetry_dynamic_versioning.backend"
+
+# Pylint
+[tool.pylint.MAIN]
+ignore = [".venv"]
+
+[tool.pylint."messages control"]
+disable = [
+    "too-few-public-methods",
+    "too-many-arguments",
+    "too-many-positional-arguments",
+    "useless-import-alias",
+    "protected-access",
+]
