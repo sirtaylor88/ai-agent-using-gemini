@@ -18,8 +18,13 @@ dynamic = ["version"]
 version = "0.0.0"
 
 [tool.poetry.group.dev.dependencies]
+bandit = "^1.8.3"
+black = "^25.1.0"
+isort = "^6.0.1"
 pre-commit = "^4.2.0"
 pylint = "^3.3.7"
+pytest = "^8.4.0"
+pytest-cov = "^6.2.1"
 ruff = "^0.11.13"
 
 [tool.poetry-dynamic-versioning]
@@ -41,3 +46,11 @@ disable = [
     "useless-import-alias",
     "protected-access",
 ]
+
+# isort
+[tool.isort]
+skip = ["__init__.py"]
+
+# bandit
+[tool.bandit]
+exclude_dirs = [".venv", "tests"]

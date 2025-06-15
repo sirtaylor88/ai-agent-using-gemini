@@ -19,4 +19,4 @@ repos:
         entry: pylint .
         language: system
         types: [python]
-        args: []
+        require_serial: true
