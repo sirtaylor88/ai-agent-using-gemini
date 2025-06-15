@@ -16,7 +16,7 @@ repos:
 
       - id: pylint
         name: pylint
-        entry: pylint .
+        entry: python3 -m pylint.__main__
         language: system
         types: [python]
         require_serial: true

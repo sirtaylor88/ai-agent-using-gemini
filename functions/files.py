@@ -1,6 +1,7 @@
 """Files related functions."""
 
 import os
+import subprocess
 
 from functions.constants import MAX_CHARS, ErrorSuffixes
 
@@ -78,7 +79,7 @@ def get_files_info(working_directory: str, directory: str) -> str:
     return result
 
 
-def write_file(working_directory: str, file_path: str, content: str):
+def write_file(working_directory: str, file_path: str, content: str) -> str:
     """Write a file."""
 
     fp, error = check_valid_path(working_directory, file_path)
@@ -99,3 +100,42 @@ def write_file(working_directory: str, file_path: str, content: str):
 
     except OSError:
         return f'Error: Error when writing "{file_path}"'
+
+
+def run_python_file(working_directory: str, file_path: str) -> str:
+    """Run Python file."""
+
+    fp, error = check_valid_path(working_directory, file_path)
+    if error:
+        return (
+            f'Error: Cannot execute "{file_path}" '
+            f"{ErrorSuffixes.OUTSIDE_WORKING_DIR.value}"
+        )
+
+    if not os.path.exists(fp):
+        return f'Error: File "{file_path}" not found.'
+
+    if not fp.endswith(".py"):
+        return f'Error: "{file_path}" is not a Python file.'
+
+    try:
+        result = subprocess.run(
+            ["python", fp],
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=False,
+            cwd=os.path.abspath(working_directory),
+        )
+        output = []
+        if result.stdout:
+            output.append(f"STDOUT:\n{result.stdout}")
+        if result.stderr:
+            output.append(f"STDERR:\n{result.stderr}")
+        if result.returncode:
+            output.append(f"Process exited with code {result.returncode}")
+
+        return "\n".join(output) if output else "No output produced."
+
+    except Exception as err:  # pylint: disable=broad-except
+        return f"Error: executing Python file: {err}"
