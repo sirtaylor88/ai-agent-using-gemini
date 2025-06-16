@@ -28,17 +28,15 @@ def get_file_content(working_directory: str, file_path: str):
         return f'Error: File not found or is not a regular file: "{file_path}"'
 
     try:
-        count = 0
-        chunk = ""
         result = ""
         with open(fp, "r", encoding="utf-8") as f:
-            while True:
-                result = chunk
-                chunk = f.read(MAX_CHARS)
-                count += 1
-                if count == 2:
-                    result += f'\n[...File "{file_path}" truncated at 10000 characters]'
-                    break
+            content = f.read()
+            if len(content) > MAX_CHARS:
+                return (
+                    f.read(MAX_CHARS)
+                    + f'\n[...File "{file_path}" truncated at 10000 characters]'
+                )
+            return content
         return result
 
     except OSError:
