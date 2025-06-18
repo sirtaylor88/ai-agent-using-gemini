@@ -123,32 +123,42 @@ def main():
     if verbose_mode:
         print("User prompt:", user_prompt)
 
+    count = 0
     messages = [
         types.Content(
             role="user",
             parts=[types.Part(text=user_prompt)],
         ),
     ]
+    while count < 20:
+        response = client.models.generate_content(
+            model="gemini-2.0-flash-001",
+            contents=messages,
+            config=types.GenerateContentConfig(
+                tools=[available_functions],
+                system_instruction=SYSTEM_PROMPT,
+            ),
+        )
 
-    response = client.models.generate_content(
-        model="gemini-2.0-flash-001",
-        contents=messages,
-        config=types.GenerateContentConfig(
-            tools=[available_functions],
-            system_instruction=SYSTEM_PROMPT,
-        ),
-    )
-    print(response.text)
+        messages.extend(candidate.content for candidate in response.candidates)
+        if not response.function_calls:
+            print(response.text)
+            break
 
-    for function_call_part in response.function_calls:
-        function_call_result = call_function(function_call_part, verbose=verbose_mode)
-        try:
-            content = function_call_result.parts[0].function_response.response
-        except Exception as exc:
-            raise AttributeError("Unknow error") from exc
+        for function_call_part in response.function_calls:
+            function_call_result = call_function(
+                function_call_part, verbose=verbose_mode
+            )
+            messages.append(function_call_result)
+            try:
+                content = function_call_result.parts[0].function_response.response
+            except Exception as exc:
+                raise AttributeError("Unknow error") from exc
 
-        if verbose_mode:
-            print(f"-> {content}")
+            if verbose_mode:
+                print(f"-> {content}")
+
+        count += 1
 
     if verbose_mode:
         print("Prompt tokens:", response.usage_metadata.prompt_token_count)
