@@ -1,56 +1,23 @@
 [project]
-name = "ai-agent"
-description = ""
+name = "ai-agent-using-gemini"
+version = "0.1.0"
+description = "Add your description here"
 authors = [
     {name = "Nhat Tai NGUYEN",email = "nhattai.nguyen88@gmail.com"}
 ]
 readme = "README.md"
 requires-python = ">=3.12, <4.0"
 dependencies = [
-    "google-genai (>=1.19.0,<2.0.0)",
-    "poetry-dynamic-versioning (>=1.8.2,<2.0.0)",
-    "poetry-plugin-sort (>=0.3.0,<0.4.0)",
-    "python-dotenv (>=1.1.0,<2.0.0)"
-]
-dynamic = ["version"]
-
-[tool.poetry]
-version = "0.0.0"
-
-[tool.poetry.group.dev.dependencies]
-bandit = "^1.8.3"
-black = "^25.1.0"
-isort = "^6.0.1"
-pre-commit = "^4.2.0"
-pylint = "^3.3.7"
-pytest = "^8.4.0"
-pytest-cov = "^6.2.1"
-ruff = "^0.11.13"
-
-[tool.poetry-dynamic-versioning]
-enable = true
-
-[build-system]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
-build-backend = "poetry_dynamic_versioning.backend"
-
-# Pylint
-[tool.pylint.MAIN]
-ignore = [".venv"]
-
-[tool.pylint."messages control"]
-disable = [
-    "too-few-public-methods",
-    "too-many-arguments",
-    "too-many-positional-arguments",
-    "useless-import-alias",
-    "protected-access",
+    "google-genai==1.12.1",
+    "python-dotenv==1.1.0",
 ]
 
-# isort
-[tool.isort]
-skip = ["__init__.py"]
-
-# bandit
-[tool.bandit]
-exclude_dirs = [".venv", "tests"]
+[dependency-groups]
+dev = [
+    "bandit>=1.9.4",
+    "pre-commit>=4.6.0",
+    "pylint>=4.0.5",
+    "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.15.12",
+]
