@@ -1,5 +1,11 @@
 # AI Agent using Gemini
 
+![Python](https://img.shields.io/badge/python-3.12+-blue?logo=python&logoColor=white)
+![Gemini](https://img.shields.io/badge/Gemini-2.5_Flash-8E75B2?logo=google&logoColor=white)
+![uv](https://img.shields.io/badge/uv-package_manager-DE5FE9?logo=uv&logoColor=white)
+![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 > A terminal AI coding agent powered by **Google Gemini**. Given a natural-language prompt, it autonomously plans and executes file operations inside a sandboxed working directory to read, modify, and run code.
 
 ---
