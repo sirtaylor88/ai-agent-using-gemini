@@ -13,7 +13,20 @@ from functions.files import (
 def call_function(
     function_call_part: types.FunctionCall, verbose: bool = False
 ) -> types.Content:
-    """Call a function."""
+    """Dispatch a Gemini function call to its Python implementation.
+
+    Injects ``./calculator`` as the working directory for all tool functions.
+    Returns an error response for unknown function names.
+
+    Args:
+        function_call_part (types.FunctionCall): The FunctionCall from a Gemini response.
+        verbose (bool): If True, print the full function name and arguments;
+            otherwise print a compact one-liner.
+
+    Returns:
+        types.Content: A Content object with role "tool" containing the function
+        response.
+    """
     function_name = function_call_part.name
     function_args = function_call_part.args
     if verbose:

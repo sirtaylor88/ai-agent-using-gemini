@@ -6,18 +6,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 # Run the agent
-python main.py "<prompt>"
-python main.py "<prompt>" --verbose
+uv run main.py "<prompt>"
+uv run main.py "<prompt>" --verbose
 
-# Run all tests
-pytest
-
-# Run a single test file
-pytest test_get_files_info.py
+# Tests
+uv run pytest
+uv run pytest tests/test_files.py          # single file
+uv run pytest --cov --cov-report=term-missing
 
 # Lint and format
-ruff check --fix
-ruff format
+uv run ruff check --fix .
+uv run ruff format .
+uv run pylint main.py utils.py functions/
+uv run mypy .
 
 # Run pre-commit hooks on all files
 pre-commit run --all-files

@@ -111,8 +111,18 @@ available_functions = types.Tool(
 )
 
 
-def main():
-    """Main app."""
+def main() -> None:
+    """Run the AI agent loop.
+
+    Reads a user prompt from argv, sends it to Gemini with the available
+    tools, and iterates until the model produces a text response or the
+    20-iteration safety limit is reached.
+
+    Raises:
+        SystemExit: Exits with code 1 when no prompt is given, or code 0 on
+            a successful run.
+        AttributeError: If a function call response has an unexpected shape.
+    """
     if len(sys.argv) < 2:
         print("Usage: python3 main.py <sentence> --<option>")
         sys.exit(1)
